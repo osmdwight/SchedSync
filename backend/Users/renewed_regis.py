@@ -3,6 +3,7 @@ import json
 import hashlib
 import hmac
 import os
+import uuid
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "my_secret_key")
 
@@ -16,7 +17,7 @@ def build_response(status_code, body_dict):
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "OPTIONS,POST",
-            "Access-Control-Allow-Headers": "Content-Type,user_id"
+            "Access-Control-Allow-Headers": "Content-Type"
         },
         "body": json.dumps(body_dict)
     }
@@ -25,15 +26,7 @@ TABLE_NAME = "users"
 
 def lambda_handler(event, context):
     try:
-        user_id = None
-        if event.get("headers"):
-            user_id = event["headers"].get("user_id")
-
-        if not user_id:
-            return build_response(400, {
-                "status": "error",
-                "message": "user-id header is required"
-            })
+        user_id = uuid.uuid4()
         body = event.get("body")
         if body is None:
             return build_response(400, {
