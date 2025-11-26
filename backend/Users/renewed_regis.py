@@ -42,9 +42,7 @@ def lambda_handler(event, context):
             "email",
             "first_name",
             "last_name",
-            "image",
-            "password_hash",
-            "theme_preference"
+            "password_hash"
         ]
         missing = [f for f in required_fields if f not in data]
         if missing:
@@ -52,6 +50,8 @@ def lambda_handler(event, context):
                 "status": "error",
                 "message": "Missing fields: " + ", ".join(missing)
             })
+        data["image"] = None
+        data["theme_preference"] = None
         items = {
             "user_id": user_id, 
             "email": data["email"],
