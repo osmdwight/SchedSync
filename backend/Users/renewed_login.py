@@ -21,16 +21,13 @@ def build_response(status_code, body_dict):
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "OPTIONS,POST",
-            "Access-Control-Allow-Headers": "Content-Type,user_id"
+            "Access-Control-Allow-Headers": "Content-Type"
         },
         "body": json.dumps(body_dict)
     }
 
 def lambda_handler(event, context):
     table = dynamodb.Table(TABLE_NAME)
-    user_id = event.get("headers", {}).get("user_id")
-    if not user_id:
-        return build_response(400, {"status": "error", "message": "user_id header is required"})
 
     body = json.loads(event.get("body", "{}"))
     entered_email = body.get("entered_email")
@@ -40,7 +37,7 @@ def lambda_handler(event, context):
         return build_response(400, {"status": "error", "message": "Email and password required."})
 
     try:
-        response = table.get_item(Key={"user_id": user_id})
+        response = table.get_item(Key={"email": entered_email})
         item = response.get("Item")
         if not item:
             return build_response(404, {"status": "error", "message": "User not found"})
