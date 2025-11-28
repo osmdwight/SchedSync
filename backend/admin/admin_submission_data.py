@@ -49,7 +49,8 @@ def lambda_handler(event, context):
                         "Title": submission.get('Title',''),
                         "deadline": submission.get('deadline',''),
                         "status": submission.get('status', ''),
-                        "user_id": user_id
+                        "user_id": user_id,
+                        "user_name": name
                     })
                     
         
