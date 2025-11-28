@@ -49,6 +49,7 @@ def lambda_handler(event, context):
                         "exam_date": exam.get('exam_date', ''),
                         "status": exam.get('status', ''),
                         "user_id": user_id,
+                        "user_name": name,
                         "exam_id": exam.get('exam_id', ''),
                         "deadline": exam.get('deadline','')
                     })
