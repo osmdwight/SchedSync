@@ -438,8 +438,6 @@
       }
     }
 
-    // ito kulangg 
-
     // exams
     async function fetchExamsData() {
 
@@ -564,7 +562,6 @@
       document.getElementById('total-users').textContent = '0';
       document.getElementById('total-exams').textContent = '0';
       document.getElementById('total-submissions').textContent = '0';
-      // Removed total-classes error fallback
     } finally {
       cards.forEach(card => document.getElementById(card).classList.remove('loading'));
     }
@@ -732,4 +729,5 @@
     });
   </script>
 </body>
+
 </html>
